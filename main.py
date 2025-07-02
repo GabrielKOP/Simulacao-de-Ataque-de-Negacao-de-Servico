@@ -70,3 +70,15 @@ def get_server_status():
         "memory_usage_mb": process.memory_info().rss / (1024 * 1024),
         "total_requests_received": request_counter,
     }
+
+@app.get("/cpu_pesada", summary="Endpoint que consome 100% da CPU")
+def get_cpu_intensive():
+    """
+    Simula um trabalho computacionalmente intensivo que consome CPU.
+    """
+    print("Iniciando processamento de CPU pesado...")
+    # Um loop simples para gastar ciclos de CPU, calculando o quadrado de 20 milhões de números.
+    # Este cálculo é "CPU-bound", ou seja, limitado pela velocidade do processador.
+    resultado = [x**2 for x in range(20_000_000)]
+    print("Processamento de CPU concluído.")
+    return {"message": "Trabalho pesado de CPU concluído!"}
