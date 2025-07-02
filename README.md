@@ -20,7 +20,7 @@ A documentação completa do projeto está dividida nos relatórios de cada etap
 
 ## Arquitetura de Solução Proposta
 
-Após a análise dos ataques, foi projetada uma arquitetura resiliente que aplica defesas em camadas, separando responsabilidades para garantir a máxima disponibilidade.
+
 
 ## Tecnologias Utilizadas
 
