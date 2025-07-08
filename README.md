@@ -18,9 +18,6 @@ A documentação completa do projeto está dividida nos relatórios de cada etap
   * 📄 **[Relatório da Etapa 2: Containerização e Execução dos Ataques](https://docs.google.com/document/d/1XIYH8dEBhaBi1Q9IcSigziiCimm67kksAwmftdiQ3cg/edit?usp=sharing.md)**
   * 📄 **[Relatório da Etapa 3: Implementação de Contramedidas e Mitigações](https://docs.google.com/document/d/1LWw8H-yUP-EBd532bUWWw4p30R29U2CElCZzq0Hztis/edit?usp=sharing.md)**
 
-## Arquitetura de Solução Proposta
-
-
 
 ## Tecnologias Utilizadas
 
