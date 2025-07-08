@@ -81,14 +81,14 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    cd Simulacao-de-Ataque-de-Negacao-de-Servico
 
    ```
-3.  **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
+2.  **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
 
-    ```bash
+   ```bash
 
-    openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
+   openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
 
-    ```
-4.  **Instale as ferramentas de ataque no WSL (Ubuntu):
+   ```
+3.  **Instale as ferramentas de ataque no WSL (Ubuntu):
 
    ```bash
 
