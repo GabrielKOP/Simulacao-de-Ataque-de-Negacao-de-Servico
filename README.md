@@ -72,7 +72,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
 #### Instalação
 
 
-1.  **Clone o repositório:**
+1. **Clone o repositório:**
 
    ```bash
 
@@ -81,7 +81,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    cd Simulacao-de-Ataque-de-Negacao-de-Servico
 
    ```
-2.  **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
+2. **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
 
    ```bash
 
@@ -99,7 +99,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
 
 ⚠️ Nota Importante: Os ataques de Camada 7 (siege, slowhttptest) são projetados para serem eficazes contra a versão vulnerável do servidor (main_vulneravel.py). Antes de construir a imagem Docker para esses testes, certifique-se de que a linha CMD no seu Dockerfile aponta para o arquivo correto. Exemplo: CMD ["uvicorn", "main_vulneravel:app", "--host", "0.0.0.0", "--port", "8000"].
     
-   1.  **Construa a imagem Docker:**
+1.  **Construa a imagem Docker:**
 
    ```bash
 
@@ -108,11 +108,11 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    ```
 2.  **Inicie o Servidor no Contêiner (O Alvo):**
 
-    ```bash
+   ```bash
 
-    docker run -d -p 8080:8000 --memory="6g" --name meu_servidor_rodando meu-servidor-fastapi
+   docker run -d -p 8080:8000 --memory="6g" --name meu_servidor_rodando meu-servidor-fastapi
 
-    ```
+   ```
 3.  **Monitore os Recursos (em um novo terminal)**
    
    ```bash
@@ -120,8 +120,8 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    docker stats meu_servidor_rodando
 
    ```
-4. **Execute os Ataques (em outro terminal, a partir do WSL):**
-   **Ataque 1: hping3 (SYN Flood - Camada 4)**
+4.  **Execute os Ataques (em outro terminal, a partir do WSL):**
+     **Ataque 1: hping3 (SYN Flood - Camada 4)**
    
    ```bash
 
