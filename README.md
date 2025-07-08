@@ -16,11 +16,11 @@ A documentação completa do projeto está dividida nos relatórios de cada etap
 
   * 📄 **[Relatório da Etapa 1: Desenvolvimento do Servidor Alvo](https://docs.google.com/document/d/13tBxKG-SxTeRZohuBgO7M66APglamj_vN88MOGzasJY/edit?usp=sharing.md)**
   * 📄 **[Relatório da Etapa 2: Containerização e Execução dos Ataques](https://docs.google.com/document/d/1XIYH8dEBhaBi1Q9IcSigziiCimm67kksAwmftdiQ3cg/edit?usp=sharing.md)**
-  * 📄 **[Relatório da Etapa 3: Implementação de Contramedidas e Mitigações]()**
+  * 📄 **[Relatório da Etapa 3: Implementação de Contramedidas e Mitigações](https://docs.google.com/document/d/1LWw8H-yUP-EBd532bUWWw4p30R29U2CElCZzq0Hztis/edit?usp=sharing)**
 
 ## Arquitetura de Solução Proposta
 
-Após a análise dos ataques, foi projetada uma arquitetura resiliente que aplica defesas em camadas, separando responsabilidades para garantir a máxima disponibilidade.
+
 
 ## Tecnologias Utilizadas
 
