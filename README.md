@@ -90,7 +90,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
 
     ```
 
-3.  **Instale as ferramentas de ataque no WSL (Ubuntu):**
+3.  **Instale as ferramentas de ataque no WSL (Ubuntu):
 
     ```bash
 
