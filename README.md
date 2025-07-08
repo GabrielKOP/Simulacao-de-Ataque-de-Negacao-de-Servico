@@ -110,7 +110,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
 
    ```bash
 
-   docker run -d -p 8080:8000 --memory="6g" --name meu_servidor_rodando meu-servidor-fastapi
+   docker run -d -p 8080:8000 --name servidor_seguro meu-servidor-fastapi
 
    ```
 3.  **Monitore os Recursos (em um novo terminal)**
@@ -132,14 +132,14 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    
    ```bash
 
-   siege -c 10 -t 2M --no-parser http://localhost:8080/cpu_pesada
+   siege -c 10 -t 2M --no-parser https://localhost:8080/cpu_pesada
 
    ```
    **Ataque 3: slowhttptest (Exaustão de Conexões - Camada 7))**
    
    ```bash
 
-   slowhttptest -c 1500 -X -l 120 -p 3 -r 500 -u http://localhost:8080/cpu_pesada
+   slowhttptest -c 1500 -X -l 120 -p 3 -r 500 -u https://localhost:8080/cpu_pesada
 
    ```
 Para parar qualquer um dos ataques, pressione `Ctrl + C` no terminal correspondente. Para parar o servidor, use `docker stop meu_servidor_rodando`.
