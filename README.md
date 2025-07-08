@@ -41,42 +41,77 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
   * Git for Windows (para ter o `openssl`)
   * WSL 2 com uma distribuição Linux (ex: Ubuntu)
 
-#### Instalação
+Instalação
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/GabrielKOP/Simulacao-de-Ataque-de-Negacao-de-Servico
-    cd Simulacao-de-Ataque-de-Negacao-de-Servico
-    ```
-2.  **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
-    ```bash
-    openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
-    ```
-3.  **Construa a imagem Docker:**
-    ```bash
-    docker build -t meu-servidor-fastapi .
-    ```
-4.  **Inicie o contêiner:**
-    ```bash
-    docker run -d -p 8080:8000 --memory="6g" --name meu_servidor_rodando meu-servidor-fastapi
-    ```
-5.  **Instale as ferramentas de ataque no WSL (Ubuntu):**
-    ```bash
+    Clone o repositório:
+    Bash
+
+git clone https://github.com/GabrielKOP/Simulacao-de-Ataque-de-Negacao-de-Servico
+cd Simulacao-de-Ataque-de-Negacao-de-Servico
+
+Gere os certificados SSL (para a versão HTTPS do servidor):
+Bash
+
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
+
+Instale as ferramentas de ataque no WSL (Ubuntu):
+Bash
+
     sudo apt update && sudo apt install hping3 siege slowhttptest -y
-    ```
 
-Com o ambiente pronto, você pode executar os comandos de ataque detalhados no **Relatório da Etapa 2**.
+Execução e Simulação dos Ataques
 
-## Principais Conclusões do Projeto
+⚠️ Nota Importante: Os ataques de Camada 7 (siege, slowhttptest) são projetados para serem eficazes contra a versão vulnerável do servidor (main_vulneravel.py). Antes de construir a imagem Docker para esses testes, certifique-se de que a linha CMD no seu Dockerfile aponta para o arquivo correto. Exemplo: CMD ["uvicorn", "main_vulneravel:app", "--host", "0.0.0.0", "--port", "8000"].
 
-1.  **Resiliência a Ataques de Rede (Camada 4):** A stack moderna (Kernel Linux + Docker) demonstrou alta resiliência contra ataques clássicos de SYN Flood, mitigando-os eficazmente através de mecanismos como SYN Cookies.
-2.  **Vulnerabilidade na Aplicação (Camada 7):** A principal fraqueza do sistema reside na lógica da aplicação. Endpoints mal projetados que causam **exaustão de CPU** ou **esgotamento do pool de conexões** foram os vetores de ataque mais eficazes.
-3.  **Importância da Arquitetura Defensiva:** A mitigação eficaz de ataques de Camada 7 exige mais do que firewalls. É necessário um design de aplicação defensivo, com descarregamento de tarefas pesadas (task queues) e o uso de um **Reverse Proxy** para gerenciar timeouts e limitar a taxa de requisições.
+    Construa a Imagem Docker:
+    Bash
 
-## Aviso Ético
+docker build -t meu-servidor-fastapi .
 
-Este projeto e suas ferramentas são destinados **estritamente para fins educacionais** em ambientes controlados. A execução de ataques contra sistemas sem autorização explícita é ilegal.
+Inicie o Servidor no Contêiner (O Alvo):
+Bash
 
-##  Autor
+docker run -d -p 8080:8000 --memory="6g" --name meu_servidor_rodando meu-servidor-fastapi
 
-  * **Gabriel Kauan Oliveira Pavan**
+Monitore os Recursos (em um novo terminal):
+Bash
+
+docker stats meu_servidor_rodando
+
+Execute os Ataques (em outro terminal, a partir do WSL):
+Escolha um dos ataques para simular.
+
+    Ataque 1: hping3 (SYN Flood - Camada 4)
+    Bash
+
+sudo hping3 -S --flood --rand-source localhost -p 8080
+
+Ataque 2: siege (Exaustão de CPU - Camada 7)
+(Requer o endpoint /cpu_pesada no servidor vulnerável)
+Bash
+
+siege -c 10 -t 2M --no-parser http://localhost:8080/cpu_pesada
+
+Ataque 3: slowhttptest (Exaustão de Conexões - Camada 7)
+(Ataque combinado e agressivo)
+Bash
+
+        slowhttptest -c 1500 -X -l 120 -p 3 -r 500 -u http://localhost:8080/cpu_pesada
+
+Para parar qualquer um dos ataques, pressione Ctrl + C no terminal correspondente. Para parar o servidor, use docker stop meu_servidor_rodando.
+
+📈 Principais Conclusões do Projeto
+
+    Resiliência a Ataques de Rede (Camada 4): A stack moderna (Kernel Linux + Docker) demonstrou alta resiliência contra ataques clássicos de SYN Flood, mitigando-os eficazmente através de mecanismos como SYN Cookies.
+
+    Vulnerabilidade na Aplicação (Camada 7): A principal fraqueza do sistema reside na lógica da aplicação. Endpoints mal projetados que causam exaustão de CPU ou esgotamento do pool de conexões foram os vetores de ataque mais eficazes.
+
+    Importância da Arquitetura Defensiva: A mitigação eficaz de ataques de Camada 7 exige mais do que firewalls. É necessário um design de aplicação defensivo, com descarregamento de tarefas pesadas (task queues) e o uso de um Reverse Proxy para gerenciar timeouts e limitar a taxa de requisições.
+
+⚠️ Aviso Ético
+
+Este projeto e suas ferramentas são destinados estritamente para fins educacionais em ambientes controlados. A execução de ataques contra sistemas sem autorização explícita é ilegal.
+
+👨‍💻 Autor
+
+    Gabriel Kauan Oliveira Pavan
