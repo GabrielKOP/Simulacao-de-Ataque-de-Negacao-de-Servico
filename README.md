@@ -74,42 +74,38 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
 
 1.  **Clone o repositório:**
 
-    ```bash
+   ```bash
 
-    git clone https://github.com/GabrielKOP/Simulacao-de-Ataque-de-Negacao-de-Servico
+   git clone https://github.com/GabrielKOP/Simulacao-de-Ataque-de-Negacao-de-Servico
 
-    cd Simulacao-de-Ataque-de-Negacao-de-Servico
+   cd Simulacao-de-Ataque-de-Negacao-de-Servico
 
-    ```
-
-2.  **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
+   ```
+3.  **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
 
     ```bash
 
     openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
 
     ```
+4.  **Instale as ferramentas de ataque no WSL (Ubuntu):
 
-3.  **Instale as ferramentas de ataque no WSL (Ubuntu):
+   ```bash
 
-    ```bash
+   sudo apt update && sudo apt install hping3 siege slowhttptest -y
 
-    sudo apt update && sudo apt install hping3 siege slowhttptest -y
-
-    ```
-
+   ```
    ## Execução e Simulação dos Ataques
 
 ⚠️ Nota Importante: Os ataques de Camada 7 (siege, slowhttptest) são projetados para serem eficazes contra a versão vulnerável do servidor (main_vulneravel.py). Antes de construir a imagem Docker para esses testes, certifique-se de que a linha CMD no seu Dockerfile aponta para o arquivo correto. Exemplo: CMD ["uvicorn", "main_vulneravel:app", "--host", "0.0.0.0", "--port", "8000"].
     
    1.  **Construa a imagem Docker:**
 
-    ```bash
+   ```bash
 
-    docker build -t meu-servidor-fastapi .
+   docker build -t meu-servidor-fastapi .
 
-    ```
-
+   ```
 2.  **Inicie o Servidor no Contêiner (O Alvo):**
 
     ```bash
@@ -146,7 +142,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    slowhttptest -c 1500 -X -l 120 -p 3 -r 500 -u http://localhost:8080/cpu_pesada
 
    ```
-###Para parar qualquer um dos ataques, pressione `Ctrl + C` no terminal correspondente. Para parar o servidor, use `docker stop meu_servidor_rodando`.
+Para parar qualquer um dos ataques, pressione `Ctrl + C` no terminal correspondente. Para parar o servidor, use `docker stop meu_servidor_rodando`.
 
 ## Principais Conclusões do Projeto
 
