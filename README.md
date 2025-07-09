@@ -99,50 +99,36 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
 
 ⚠️ Nota Importante: Os ataques de Camada 7 (siege, slowhttptest) são projetados para serem eficazes contra a versão vulnerável do servidor (main_vulneravel.py). Antes de construir a imagem Docker para esses testes, certifique-se de que a linha CMD no seu Dockerfile aponta para o arquivo correto. Exemplo: CMD ["uvicorn", "main_vulneravel:app", "--host", "0.0.0.0", "--port", "8000"].
     
-1.  **Construa a imagem Docker:**
+1.  **Inicie a Arquitetura Completa (Nginx + FastAPI):**
 
    ```bash
 
-   docker build -t meu-servidor-fastapi .
+   docker-compose up --build
 
    ```
-2.  **Inicie o Servidor no Contêiner (O Alvo):**
-
-   ```bash
-
-   docker run -d -p 8080:8000 --name servidor_seguro meu-servidor-fastapi
-
-   ```
-3.  **Monitore os Recursos (em um novo terminal)**
-   
-   ```bash
-
-   docker stats servidor_seguro
-
-   ```
-4.  **Execute os Ataques (em outro terminal, a partir do WSL):**
+2.  **Execute os Ataques (em outro terminal, a partir do WSL):**
      **Ataque 1: hping3 (SYN Flood - Camada 4)**
    
    ```bash
 
-   sudo hping3 -S --flood --rand-source localhost -p 8080
+   sudo hping3 -S --flood --rand-source localhost -p 443
 
    ```
    **Ataque 2: siege (Exaustão de CPU - Camada 7)**
    
    ```bash
 
-   siege -c 10 -t 2M --no-parser https://localhost:8080/cpu_pesada
+   siege -c 200 -t 2M --no-parser https://localhost/cpu_pesada
 
    ```
    **Ataque 3: slowhttptest (Exaustão de Conexões - Camada 7))**
    
    ```bash
 
-   slowhttptest -c 1500 -X -l 120 -p 3 -r 500 -u https://localhost:8080/cpu_pesada
+   slowhttptest -c 1500 -X -l 120 -p 3 -r 500 -u https://localhost/cpu_pesada
 
    ```
-Para parar qualquer um dos ataques, pressione `Ctrl + C` no terminal correspondente. Para parar o servidor, use `docker stop servidor_seguro`.
+Para parar qualquer um dos ataques, pressione `Ctrl + C` no terminal correspondente. Para parar a simulação, pressione `Ctrl + C` no terminal onde o docker-compose está rodando.
 
 ## Principais Conclusões do Projeto
 
