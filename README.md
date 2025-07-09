@@ -117,7 +117,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    
    ```bash
 
-   docker stats meu_servidor_rodando
+   docker stats servidor_seguro
 
    ```
 4.  **Execute os Ataques (em outro terminal, a partir do WSL):**
@@ -142,7 +142,7 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    slowhttptest -c 1500 -X -l 120 -p 3 -r 500 -u https://localhost:8080/cpu_pesada
 
    ```
-Para parar qualquer um dos ataques, pressione `Ctrl + C` no terminal correspondente. Para parar o servidor, use `docker stop meu_servidor_rodando`.
+Para parar qualquer um dos ataques, pressione `Ctrl + C` no terminal correspondente. Para parar o servidor, use `docker stop servidor_seguro`.
 
 ## Principais Conclusões do Projeto
 
