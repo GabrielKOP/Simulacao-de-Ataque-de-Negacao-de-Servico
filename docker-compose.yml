@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # Serviço do Proxy Reverso
+  proxy:
+    image: nginx:latest
+    ports:
+      - "443:443" # Expõe a porta HTTPS para o mundo exterior
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./key.pem:/etc/ssl/private/key.pem:ro
+      - ./cert.pem:/etc/ssl/certs/cert.pem:ro
+    depends_on:
+      - app
+
+  # Serviço da sua Aplicação FastAPI
+  app:
+    build: . # Constrói a imagem a partir do seu Dockerfile
+    # Não precisa mais expor portas aqui, o proxy cuidará disso
+    command: uvicorn main_com_contramedidas:app --host 0.0.0.0 --port 8000
