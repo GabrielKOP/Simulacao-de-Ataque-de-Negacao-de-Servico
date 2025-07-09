@@ -81,14 +81,25 @@ Para reproduzir o ambiente de teste da **Etapa 2**:
    cd Simulacao-de-Ataque-de-Negacao-de-Servico
 
    ```
-2. **Gere os certificados SSL** (se for testar a versão HTTPS no contêiner):
+2. **Apague os arquivos venv e crie o seu:**
+   ```
+
+   python -m venv venv
+   .\venv\Scripts\activate
+   ```
+3. **Baixe as bibliotecas necessarias:**
+   ```
+
+   pip install -r requirements.txt
+   ```
+4. **Apague os arquivos cert.pem e key.pem e gere os certificados SSL:**
 
    ```bash
 
    openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -nodes
 
    ```
-3.  **Instale as ferramentas de ataque no WSL (Ubuntu):
+5.  **Instale as ferramentas de ataque no WSL (Ubuntu):**
 
    ```bash
 
